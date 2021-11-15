@@ -19,7 +19,7 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
 # Use Debian, because nodegit is too hard to get to work with
 # Alpine >=3.8
-FROM node:12-buster-slim
+FROM node:12.10-buster-slim
 RUN apt-get update && apt-get install -y python g++ build-essential
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
@@ -41,7 +41,7 @@ RUN apt-get update && apt-get install -y libgssapi-krb5-2
 RUN npm install --prefix $APP_BUNDLE_FOLDER/bundle/programs/server nodegit
 
 # Those dependencies are needed by the entrypoint.sh script
-RUN npm install -C $SCRIPTS_FOLDER p-wait-for mongodb
+RUN npm install -C $SCRIPTS_FOLDER p-wait-for@3.1.0 mongodb
 RUN chgrp -R 0 $SCRIPTS_FOLDER && chmod -R g=u $SCRIPTS_FOLDER
 
 VOLUME [ "/app/models"]
